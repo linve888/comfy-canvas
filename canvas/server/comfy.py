@@ -258,14 +258,45 @@ def history(pid: str) -> dict | None:
     return None
 
 
-def extract_outputs(item: dict) -> list[dict]:
-    """从 history item 里取所有产物文件描述。"""
-    files = []
-    for node_out in (item.get("outputs") or {}).values():
+SAVE_HINTS = ("save", "combine")  # SaveImage / SaveVideo / VHS_VideoCombine / SaveAnimatedWEBP
+
+
+def extract_outputs(item: dict, graph: dict | None = None) -> list[dict]:
+    """从 history item 里取真正要归档的产物文件。
+
+    ComfyUI 的 history 里，加载节点也会带输出：原生 LoadVideo 声明了
+    has_intermediate_output，跑完会在 outputs 里挂一条 `canvas_xxx.mp4` 的预览。
+    照搬全收的话，放大任务的产物就变成「原片 + 放大件」两张，节点上多出来一张
+    用户自己喂进去的片子。
+
+    所以：先扔掉加载节点（class 里带 load）的条目 —— 那是输入的回声；
+    再优先只留保存类节点（save / combine）的；都没匹配上就退回全量，
+    免得换个命名风格的保存节点就什么也收不到了。
+    """
+    entries = []
+    for nid, node_out in (item.get("outputs") or {}).items():
+        cls = str(((graph or {}).get(nid) or {}).get("class_type") or "").lower()
+        entries.append((nid, cls, node_out))
+
+    def files_of(node_out):
+        out = []
         for key in ("images", "gifs", "videos", "audio"):
             for f in node_out.get(key) or []:
                 if f.get("filename"):
-                    files.append(f)
+                    out.append(f)
+        return out
+
+    if graph:
+        kept = [e for e in entries if "load" not in e[1]]
+        if kept:
+            entries = kept
+        saves = [e for e in entries if any(h in e[1] for h in SAVE_HINTS)]
+        if saves:
+            entries = saves
+
+    files = []
+    for _, _, node_out in entries:
+        files.extend(files_of(node_out))
     return files
 
 

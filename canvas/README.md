@@ -369,6 +369,8 @@ H3 的 `ref_images` 是 AUTOGROW(min 0)，少一路照样能跑；但模板里�
 
 每次执行都把 `prefix` 注成 jobId，产物落在 `assets/<jobId>/`。不再有 `AIGCTYD2_00001.mp4` 这种事后无法归属的文件。
 
+**加载节点的预览不算产物**。原生 `LoadVideo` 声明了 `has_intermediate_output`，跑完会在 history 里挂一条输入文件的预览；照单全收的话，放大任务的产物会变成「原片 + 放大件」两份，节点上多出一张用户自己喂进去的片子。归档时按节点 class 过滤（`extract_outputs(item, graph)`）：先扔掉 class 里带 `load` 的条目，再优先只留 `save / combine` 的；都对不上才退回全量。
+
 **4. 串行队列，不并发**
 
 ComfyUI 本身就是单队列，3080 的 20GB 显存也不允许两条 20GB 模型同时驻留。并发提交只会互相排队，还多抢显存。

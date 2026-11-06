@@ -959,8 +959,8 @@ def run_job(job: dict) -> None:
                  after=round(time.time() - t0, 1))
             return
 
-        # 完成：把所有产物拉回本地
-        files = comfy.extract_outputs(item)
+        # 完成：把所有产物拉回本地（带上 graph：加载节点的预览不算产物）
+        files = comfy.extract_outputs(item, graph)
         saved = []
         for f in files:
             name = f["filename"]
