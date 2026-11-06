@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<title>节点样张</title>
+<link rel="stylesheet" href="./static/mock.css" />
+<style>
+  html, body { margin: 0; background: #1a1a1a; }
+  .mock-wrap { display: flex; gap: 90px; padding: 46px 60px; align-items: flex-start; }
+  .mock-col { position: relative; }
+  .mock-lb { font: 11px/1 var(--mono); color: #6f6f6f; margin: 0 0 10px 2px; }
+</style>
+</head>
+<body>
+<div class="mock-wrap">
+
+  <!-- ---------- 文本节点 ---------- -->
+  <div class="mock-col">
+    <p class="mock-lb">text</p>
+    <div class="node textnode">
+      <div class="node-cap">
+        <span class="cap-ico"><svg width="12.5" height="12.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.2h10M8 4.2V13" stroke-linecap="round"/></svg></span>
+        <span class="cap-name">提示词</span>
+        <span class="cap-right"><span class="cap-state">62 字</span></span>
+      </div>
+      <div class="tn-panel">
+        <textarea class="tn-input nodrag nowheel" rows="6">霓虹把雨棚照成发绿的塑料布。门厅里那盏壁灯还亮着，光落在台阶上，裂缝里积着水。</textarea>
+        <div class="tn-bar">
+          <button class="gc-ic" title="复制"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V3.6A1.6 1.6 0 0 0 8.9 2H3.6A1.6 1.6 0 0 0 2 3.6v5.3a1.6 1.6 0 0 0 1.6 1.6h1.9"/></svg></button>
+          <button class="gc-ic" title="删除"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4l8 8M12 4l-8 8" stroke-linecap="round"/></svg></button>
+          <span class="spacer"></span>
+          <span class="tn-hint">拖 ＋ 接提示词口</span>
+        </div>
+      </div>
+      <div class="side-add right" role="button">＋
+        <span class="react-flow__handle"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- 通用模板节点 ---------- -->
+  <div class="mock-col">
+    <p class="mock-lb">template</p>
+    <div class="node tplnode">
+      <div class="node-cap">
+        <span class="cap-ico"><svg width="12.5" height="12.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M2 6h12M6.5 6v7.5"/></svg></span>
+        <span class="cap-name">flux_dev_t2i</span>
+        <span class="cap-right"><span class="cap-state done">完成 12s</span></span>
+      </div>
+      <div class="shell">
+        <div class="gwrap">
+          <div class="gstage-wrap">
+            <div class="gstage-box">
+              <div class="gstage tstage empty">
+                <div class="gempty">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M2 6h12M6.5 6v7.5"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gcomposer nodrag nowheel">
+            <div class="gc-tools">
+              <div class="chip-wrap">
+                <button class="gc-chip gc-chip-model">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2.5" width="12" height="11" rx="2"/></svg>
+                  <span class="gc-chip-t">Flux Dev 文生图</span>
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5l4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <span class="spacer"></span>
+            </div>
+
+            <div class="tn-slots">
+              <div class="tn-slot filled" style="position:relative">
+                <span class="react-flow__handle" style="position:absolute;left:-15px;top:50%;transform:translateY(-50%);width:9px;height:9px"></span>
+                <span class="tn-slot-lb">image1</span>
+                <span class="tn-slot-st">已连接</span>
+              </div>
+              <div class="tn-slot" style="position:relative">
+                <span class="react-flow__handle" style="position:absolute;left:-15px;top:50%;transform:translateY(-50%);width:9px;height:9px"></span>
+                <span class="tn-slot-lb">image2</span>
+                <span class="tn-slot-st">拖入</span>
+              </div>
+            </div>
+
+            <div class="gc-prompt">
+              <textarea class="gc-input" rows="4">霓虹把雨棚照成发绿的塑料布，门厅那盏壁灯亮着，光落在台阶上。</textarea>
+            </div>
+
+            <div class="tn-note">cfg=1 · 负向不生效，已隐藏</div>
+
+            <div class="tn-nums">
+              <label class="tn-num"><span>width</span><input type="number" value="752" /></label>
+              <label class="tn-num"><span>height</span><input type="number" value="1344" /></label>
+              <label class="tn-num"><span>steps</span><input type="number" value="28" /></label>
+              <label class="tn-num"><span>seed</span><input type="text" placeholder="留空=随机" /></label>
+            </div>
+
+            <div class="gc-bar">
+              <button class="gc-ic" title="整链"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.5 9.5 9.5 6.5M6 11l-1 1a2.6 2.6 0 0 1-3.7-3.7l1-1M10 5l1-1a2.6 2.6 0 0 1 3.7 3.7l-1 1" stroke-linecap="round"/></svg></button>
+              <span class="spacer"></span>
+              <button class="gsubmit"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 3l9 5-9 5z"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side-add right" role="button">＋
+        <span class="react-flow__handle"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

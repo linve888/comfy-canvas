@@ -1,0 +1,30 @@
+# --- 依赖 ---
+canvas/web/node_modules/
+node_modules/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+
+# --- 运行日志 ---
+*.log
+*.err.log
+
+# --- 画布运行数据：素材、工程快照、任务队列 ---
+canvas/assets/
+canvas/projects/
+
+# --- 批量渲染产物（成片、音频、切片图）---
+batch-render/
+
+# --- 工作区私有数据 ---
+.workbuddy/
+
+# --- 调试截图草稿（README 用的 canvas/screenshot.png 不受影响）---
+shot-open.png
+shot-closed.png
+
+# --- 系统垃圾 ---
+.DS_Store
+Thumbs.db
+desktop.ini
